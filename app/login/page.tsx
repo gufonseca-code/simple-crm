@@ -1,0 +1,52 @@
+"use client";
+
+import { signIn } from "next-auth/react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+
+export default function LoginPage() {
+    const router = useRouter();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        const result = await signIn("credentials", {
+            redirect: false,
+            email,
+            password,
+            callbackUrl: "/dashboard",
+        });
+
+        if (result?.error) {
+            setError("Credenciais inválidas");
+        }
+
+        if (result?.ok) {
+            router.push("/dashboard");
+        }
+    };
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+            />
+            <input
+                type="password"
+                placeholder="Senha"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+            />
+            <button type="submit">Entrar</button>
+            {error && <p>{error}</p>}
+        </form>
+    );
+}
