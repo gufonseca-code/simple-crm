@@ -2,12 +2,17 @@ import { NextResponse } from 'next/server';
 import bcrypt from 'bcrypt';
 import { prisma } from '@/lib/prisma';
 
+function validarEmail(email: string) {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+}
+
 export async function POST(req: Request) {
     try {
         const body = await req.json();
         const { name, email, password } = body;
 
-        if (!name || !email || !password) {
+        if (!email || !password) {
             return NextResponse.json(
                 { error: "Email e senha são obrigatórios "},
                 { status: 400 }
@@ -17,6 +22,13 @@ export async function POST(req: Request) {
         const existingUser = await prisma.user.findUnique({
             where: { email },
         });
+
+        if (!validarEmail(email)) {
+            return NextResponse.json(
+                { error: "Formato de email inválido" },
+                { status: 400}
+            );
+        }
 
         if (existingUser) {
             return NextResponse.json(

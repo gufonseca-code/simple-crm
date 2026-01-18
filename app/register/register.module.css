@@ -4,7 +4,7 @@ body {
 
 
 
-.loginContainer {
+.registerContainer {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13,7 +13,7 @@ body {
   padding: 20px;
 }
 
-.loginCard {
+.registerCard {
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -66,8 +66,8 @@ body {
 .error {
   color: #D9534F;
   font-size: 0.9rem;
-  margin-top: -0.5rem;
-  margin-bottom: 0.8rem;
+  margin-top: -0.1rem;
+  margin-bottom: -0.3rem;
 }
 
 .button {
@@ -101,5 +101,4 @@ body {
   color: #005bbb;                       
   text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 }
-
 

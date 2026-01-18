@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import styles from "./login.module.css";
 
 export default function LoginPage() {
@@ -54,6 +55,7 @@ export default function LoginPage() {
         <button className={styles.button} type="submit">
           Entrar
         </button>
+        <Link className={styles.link} href="/register">Criar conta</Link>
       </form>
     </div>
   );
