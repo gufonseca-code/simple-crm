@@ -6,10 +6,20 @@
 
 generator client {
   provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
 }
 
 datasource db {
   provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+
+enum LeadStatus {
+    NEW
+    CONTACTED
+    PROPOSAL_SENT
+    WON
+    LOST
 }
 
 model User {
@@ -18,4 +28,53 @@ model User {
   email     String   @unique
   password  String
   createdAt DateTime @default(now())
+
+  clients Client[]
+  leads Lead[]
+  tasks Task[]
+} 
+
+model Client {
+  id        String     @id @default(uuid())
+  name      String
+  email     String?
+  phone     String?
+  createdAt DateTime   @default(now())
+
+  userId    String
+  user      User       @relation(fields: [userId], references: [id])
+
+  leads Lead[]
 }
+
+model Lead {
+  id        String     @id @default(uuid())
+  title     String
+  status    LeadStatus @default(NEW)
+  value     Float?
+  createdAt DateTime   @default(now())
+
+  userId    String
+  user      User       @relation(fields: [userId], references: [id])
+
+  clientId  String
+  client    Client     @relation(fields: [clientId], references: [id])
+
+  tasks Task[]
+}
+
+model Task {
+  id        String     @id @default(uuid())
+  title     String
+  completed Boolean    @default(false)
+  dueDate   DateTime?
+  createdAt DateTime   @default(now())
+
+  userId    String
+  user      User       @relation(fields: [userId], references: [id])
+
+  leadId    String?
+  lead      Lead?      @relation(fields: [leadId], references: [id])
+}
+
+

@@ -29,8 +29,10 @@
     "dotenv": "^17.2.3",
     "eslint": "^9",
     "eslint-config-next": "16.1.1",
-    "prisma": "^7.2.0",
+    "prisma": "^6.19.2",
     "tailwindcss": "^4",
+    "ts-node": "^1.7.1",
+    "tsx": "^4.21.0",
     "typescript": "^5"
   }
 }
